@@ -8,24 +8,34 @@ var map = new mapboxgl.Map({
     zoom: 1.5
 });
 
-// Funktion zum Abrufen von Krisendaten von einer API
-async function fetchCrisisData() {
-    try {
-        // Beispiel-API-Endpunkt für Krisendaten
-        let response = await fetch('https://api.example.com/crisis-data');
-        let data = await response.json();
-        
-        // Markierungen auf der Karte hinzufügen
-        data.crises.forEach(crisis => {
-            new mapboxgl.Marker()
-                .setLngLat([crisis.longitude, crisis.latitude])
-                .setPopup(new mapboxgl.Popup().setText(crisis.description)) // Pop-up hinzufügen
-                .addTo(map);
-        });
-    } catch (error) {
-        console.error('Error fetching crisis data:', error);
+// Statische Daten für Krisenherde
+var crisisData = [
+    {
+        description: 'Drought in East Africa',
+        longitude: 40.0,
+        latitude: 1.5
+    },
+    {
+        description: 'Conflict in the Middle East',
+        longitude: 45.0,
+        latitude: 33.0
+    },
+    {
+        description: 'Flooding in South Asia',
+        longitude: 85.0,
+        latitude: 27.0
+    },
+    {
+        description: 'Wildfires in Australia',
+        longitude: 133.0,
+        latitude: -25.0
     }
-}
+];
 
-// Daten abrufen und Karte aktualisieren
-fetchCrisisData();
+// Markierungen auf der Karte hinzufügen
+crisisData.forEach(crisis => {
+    new mapboxgl.Marker()
+        .setLngLat([crisis.longitude, crisis.latitude])
+        .setPopup(new mapboxgl.Popup().setText(crisis.description)) // Pop-up hinzufügen
+        .addTo(map);
+});
